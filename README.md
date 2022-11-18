@@ -643,6 +643,15 @@ Stanford NER entities:
 NLTK
 - NLTK maximum entropy classifier
 
+Transformer Models (on HuggingFace)
+- GPT-NeoX 
+- [BERT](https://huggingface.co/dslim/bert-base-NER?text=My+name+is+Sarah+and+I+live+in+London)
+- [BERT-large](https://huggingface.co/dslim/bert-large-NER)
+- [camemBERT](https://huggingface.co/Jean-Baptiste/camembert-ner)
+- [Electra](https://huggingface.co/dbmdz/electra-large-discriminator-finetuned-conll03-english)
+- [NER-English-Large](https://huggingface.co/flair/ner-english-large) (best so far for org NER)
+- [XML-RoBERTa](https://huggingface.co/xlm-roberta-large-finetuned-conll03-english)
+
 
 ```python
 doc = nlp("Larry Page founded Google in the US in early 1990.")
@@ -783,6 +792,98 @@ lexnlp.extract.en.acts.get_act_list(text)
 
 
 
+## NER with flair's NER-English-Large
+
+Source: https://huggingface.co/flair/ner-english-large
+
+Available tags:
+- PER, person
+- LOC, location
+- ORG, organization
+- MISC, other name
+
+
+```python
+pip install flair
+```
+
+
+```python
+from flair.data import Sentence
+from flair.models import SequenceTagger
+
+# load tagger
+tagger = SequenceTagger.load("flair/ner-english-large")
+```
+
+
+```python
+# make example sentence
+sentence = Sentence("George Washington went to Washington")
+
+# predict NER tags
+tagger.predict(sentence)
+
+# print sentence
+print(sentence)
+
+# print predicted NER spans
+print('The following NER tags are found:')
+
+# iterate over entities and print
+for entity in sentence.get_spans('ner'):
+    print(entity)
+```
+
+    Sentence: "George Washington went to Washington" → ["George Washington"/PER, "Washington"/LOC]
+    The following NER tags are found:
+    Span[0:2]: "George Washington" → PER (1.0)
+    Span[4:5]: "Washington" → LOC (1.0)
+
+
+
+```python
+text = "We are the platform of choice for customers' SAP workloads in the cloud, companies like Thabani, Munich Re's, Sodexo, Volvo Cars, all run SAP on Azure. We are the only cloud provider with direct and secure access to Oracle databases running an Oracle Cloud infrastructure, making it possible for companies like FedEx, GE, and Marriott to use capabilities from both companies. And with Azure Confidential Computing, we're enabling companies in highly regulated industries, including RBC, to bring their most sensitive applications to the cloud. Just last week, UBS said it will move more than 50% of its applications to Azure."
+
+# make example sentence
+sentence = Sentence(text)
+
+# predict NER tags
+tagger.predict(sentence)
+
+# print sentence
+print(sentence)
+
+# print predicted NER spans
+print('\nThe following NER tags are found:\n')
+
+# iterate over entities and print
+for entity in sentence.get_spans('ner'):
+    print(entity)
+```
+
+    Sentence: "We are the platform of choice for customers' SAP workloads in the cloud , companies like Thabani , Munich Re 's , Sodexo , Volvo Cars , all run SAP on Azure . We are the only cloud provider with direct and secure access to Oracle databases running an Oracle Cloud infrastructure , making it possible for companies like FedEx , GE , and Marriott to use capabilities from both companies . And with Azure Confidential Computing , we 're enabling companies in highly regulated industries , including RBC , to bring their most sensitive applications to the cloud . Just last week , UBS said it will move more than 50 % of its applications to Azure ." → ["SAP"/ORG, "Thabani"/ORG, "Munich Re"/ORG, "Sodexo"/ORG, "Volvo Cars"/ORG, "SAP"/ORG, "Azure"/MISC, "Oracle"/ORG, "Oracle Cloud"/MISC, "FedEx"/ORG, "GE"/ORG, "Marriott"/ORG, "Azure Confidential Computing"/MISC, "RBC"/ORG, "UBS"/ORG, "Azure"/MISC]
+    
+    The following NER tags are found:
+    
+    Span[8:9]: "SAP" → ORG (0.9945)
+    Span[16:17]: "Thabani" → ORG (1.0)
+    Span[18:20]: "Munich Re" → ORG (0.9604)
+    Span[22:23]: "Sodexo" → ORG (1.0)
+    Span[24:26]: "Volvo Cars" → ORG (1.0)
+    Span[29:30]: "SAP" → ORG (0.9995)
+    Span[31:32]: "Azure" → MISC (0.9974)
+    Span[45:46]: "Oracle" → ORG (0.9997)
+    Span[49:51]: "Oracle Cloud" → MISC (1.0)
+    Span[59:60]: "FedEx" → ORG (1.0)
+    Span[61:62]: "GE" → ORG (1.0)
+    Span[64:65]: "Marriott" → ORG (1.0)
+    Span[74:77]: "Azure Confidential Computing" → MISC (0.999)
+    Span[88:89]: "RBC" → ORG (1.0)
+    Span[104:105]: "UBS" → ORG (1.0)
+    Span[117:118]: "Azure" → MISC (0.9993)
+
+
 # Text Classification
 
 Two types:
@@ -843,13 +944,22 @@ print("This is a %s news" %ag_news_label[predict(ex_text_str, model, vocab, 2)])
 # Similarity
 How similar are two documents, sentences, token or spans?
 
+Popular: [Cosine](https://studymachinelearning.com/cosine-similarity-text-similarity-metric/) and [Jaccard](https://studymachinelearning.com/jaccard-similarity-text-similarity-metric-in-nlp/) similarity.
+
 Cosine similarity (also known as: L2-normalized dot product of vectors) is a formula used to calculate how similar two given word vectors are.
 
-How to calculate Cosine similarity?
-- spacy (see example below)
-- scikit: [sklearn.metrics.pairwise.cosine_similarity](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise.cosine_similarity.html#sklearn.metrics.pairwise.cosine_similarity)
+Jaccard similarity indicates how many words two documents share by using the intersection and unions of the words.
 
 ## Cosine Similarity
+
+A document, sentence or word is represented as a vector and the Cosine sim calculates the angle between two vectors. 
+
+- Small angle = vectors have similar orientation, i.e. sentences are similar.
+- Large angle = vectors are oriented in the opposite directions, i.e. sentences are not similar at all.
+
+![cos-sim](https://studymachinelearning.com/wp-content/uploads/2019/09/Cosine-similarity-Wikipedia.png)
+
+### Example 1
 
 Figure below shows three word vectors and Cosine distance (=similarity) between 
 - "I hate cats" and "I love dogs" (result: not very similar)
@@ -858,6 +968,54 @@ Figure below shows three word vectors and Cosine distance (=similarity) between
 <img src="https://miro.medium.com/max/700/1*QNp4TNCNwo1HMqjFV4jq1g.png" width="600">
 
 [Credits](https://towardsdatascience.com/group-thousands-of-similar-spreadsheet-text-cells-in-seconds-2493b3ce6d8d)
+
+### Example 2
+
+```
+doc_1 = "Data is the oil of the digital economy" 
+doc_2 = "Data is a new oil" 
+
+# Vector representation of the document
+doc_1_vector = [1, 1, 1, 1, 0, 1, 1, 2]
+doc_2_vector = [1, 0, 0, 1, 1, 0, 1, 0]
+```
+
+![vec](https://studymachinelearning.com/wp-content/uploads/2019/09/word_cnt_vect_cosine_similarity.png)
+
+![vec-calc](https://studymachinelearning.com/wp-content/uploads/2019/09/cosine_similarity_example_1.png)
+
+[Credits](https://studymachinelearning.com/cosine-similarity-text-similarity-metric/)
+
+---
+
+Cosine sim with scikit: [sklearn.metrics.pairwise.cosine_similarity](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise.cosine_similarity.html#sklearn.metrics.pairwise.cosine_similarity)
+
+## Jaccard Similarity
+
+Jaccard sim is calculated by dividing the number of words occuring in both documents/sentences (intersection) with the number of all words in both docs/sents (union).
+
+### Example 
+```
+doc_1 = "Data is the new oil of the digital economy"
+doc_2 = "Data is a new oil"
+```
+
+Each sentence is tokenized into words.
+
+```
+words_doc1 = {'data', 'is', 'the', 'new', 'oil', 'of', 'digital', 'economy'}
+words_doc2 = {'data', 'is', 'a', 'new', 'oil'}
+```
+
+Four words occur in both sentences (intersection): data, is, new, oil.
+
+Across both sentences, nine unique words exist (union): data, a, of, is, economy, the, new, digital, oil.
+
+![jac-sim1](https://studymachinelearning.com/wp-content/uploads/2020/04/jaccard_example.png)
+
+Visualized:
+
+![jac-sim2](https://studymachinelearning.com/wp-content/uploads/2020/04/intersection_example.png)
 
 ## L2 Norm
 
