@@ -138,10 +138,25 @@ https://www.analyticsvidhya.com/blog/2017/06/word-embeddings-count-word2veec/
 
 Term Frequency - Inverse Document Frequency
 
-- Term frequency equals the number of times a word appears in a document divided by the total number of words in the document. 
-- Inverse document frequency calculates the weight of rare words in all documents in the corpus, with rare words having a high IDF score, and words that are present in all documents in a corpus having IDF close to zero.
+- Term frequency (TF) is the number of times a word appears in a document divided by the total number of words in the document. 
+- Inverse document frequency (IDF) calculates the weight of rare words in all documents in the corpus, with rare words having a high IDF score, and words that are present in all documents in a corpus having IDF close to zero.
 
 (sklearn) in Python has a function TfidfVectorizer() that will compute the TF-IDF values for you
+
+
+```
+TF(t) = (Number of times term t appears in a document) / (Total number of terms in the document).
+
+IDF(t) = log_e(Total number of documents / Number of documents with term t in it).
+```
+
+##### Example
+
+Consider a document containing 100 words wherein the word cat appears 3 times. The term frequency (TF) for cat is then (3 / 100) = 0.03. 
+
+Now, assume we have 10 million documents and the word cat appears in one thousand of these. Then, the inverse document frequency (IDF) is calculated as log(10,000,000 / 1,000) = 4. 
+
+Thus, the Tf-idf weight is the product of these quantities: 0.03 * 4 = 0.12
 
 
 ```python
@@ -159,8 +174,53 @@ vectorizer = TfidfVectorizer(analyzer=ngrams_analyzer)
 # Credits: https://towardsdatascience.com/group-thousands-of-similar-spreadsheet-text-cells-in-seconds-2493b3ce6d8d
 ```
 
-#### Co-Occurrence Vector
+#### Co-Occurrence Vector/Matrix
 
+Words that are similar to each other will tend to co-occur together. 
+
+Let’s call the context of the word, the two words that surround a specific word by each side. For example, in a sentence `I ate a peach yesterday`, the word `peach` is surrounded by the words: `ate`, `a`, `yesterday`.
+
+To build a co-occurrence matrix, one has to start with the full vocabulary of words in a specific corpus.
+
+**Example**
+
+Let’s imagine some simple sentences:
+- I’m riding in my car to the beach.
+- I’m riding in my jeep to the beach.
+- My car is a jeep.
+- My jeep is a car.
+- I ate a banana.
+- I ate a peach.
+
+The vocabulary of our group of sentences is:
+
+`a, ate, banana, beach, car, in, is, I’m, jeep, my, riding, to, the`
+
+Our co-occurence vector will be of of size 13, where 13 is the number of distinct words in our vocabulary.
+
+The initialized co-occurence vector for the word `car` is:
+
+`[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]`
+
+In our sentences, the word `car` shows up in 3 sentences:
+
+- I’m riding **in my** car **to the** beach.
+- **My** car **is a** jeep.
+- My jeep **is a** car.
+
+The highlighted words co-occur with the word `car`, i.e. the highlights represent the two words before and two words after `car`.
+
+The co-occurence vector for `car` is: 
+
+```
+# Vocabulary + co-occurence vector below
+ a, ate, banana, beach, car, in, is, I’m, jeep, my, riding, to, the
+[2,   0,      0,     0,   0,  1,  2,   0,    0,  2,      0,  1,   1]
+```
+
+Each number represents the number of occurences in the context of the word. For example, `a` appears twice, whereas `ate` didn't appear at all.
+
+[Credits](https://towardsdatascience.com/word-vectors-intuition-and-co-occurence-matrixes-a7f67cae16cd)
 
 ### 2. Prediction based word embeddings
 
@@ -967,12 +1027,19 @@ Jaccard similarity indicates how many words two documents share by using the int
 
 ## Cosine Similarity
 
-A document, sentence or word is represented as a vector and the Cosine sim calculates the angle between two vectors. 
+A document, sentence or word is represented as a vector and the Cosine sim calculates the angle (="similarity") between two vectors. 
 
-- Small angle = vectors have similar orientation, i.e. sentences are similar.
-- Large angle = vectors are oriented in the opposite directions, i.e. sentences are not similar at all.
+The resulting similarity ranges from:
+
+- 1 if the vectors are the same
+- 0 if the vectors don’t have any relationship (orthogonal vectors)
 
 ![cos-sim](https://studymachinelearning.com/wp-content/uploads/2019/09/Cosine-similarity-Wikipedia.png)
+
+Similarity measurements for:
+- Term frequency vectors
+- Oc-occurence vectors
+
 
 ### Example 1
 
