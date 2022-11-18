@@ -1,11 +1,15 @@
+
 # NLP Cheat Sheet - Introduction - Overview - Python - Starter Kit
 
 Introduction to Natural Language Processing (NLP) tools, frameworks, concepts, resources for Python
 
 Demo: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/janlukasschroeder/nlp-cheat-sheet-python/master?filepath=NLP%2BCheat%2BSheet.ipynb)
 
+[Cheat Sheet in Colab](https://colab.research.google.com/github/janlukasschroeder/nlp-cheat-sheet-python/blob/master/NLP-Cheat-Sheet.ipynb)
+
 
 # NLP Python Libraries
+
 - [spacy](https://spacy.io/)
 - [NLTK](https://www.nltk.org/) - similar to spacy, supports more models, simpl GUI model download `nltk.download()`
 - [gensim](https://radimrehurek.com/gensim) - topic modelling, accessing corpus, similarity calculations between query and indexed docs, SparseMatrixSimilarity, Latent Semantic Analysis
@@ -43,6 +47,7 @@ Uncased model is better unless you know that case information is important for y
 - [Kaggle - Daily news for stock market prediction](https://www.kaggle.com/aaron7sun/stocknews)
 - [CNN News](https://drive.google.com/uc?export=download&id=0BwmD_VLjROrfTHk4NFg2SndKcjQ)
 - [AG News - PyTorch integrated](https://pytorch.org/tutorials/beginner/text_sentiment_ngrams_tutorial.html)
+- [CommonCrawl News Dataset](https://commoncrawl.org/2016/10/news-dataset-available/)
 
 ### Installation:
 spacy (good for beginners; use NLTK for bigger projects)
@@ -1502,8 +1507,3 @@ A confusion matrix is a table where each cell `[i,j]` indicates how often label 
 - To choose a label for an input value, the naive Bayes classifier begins by calculating the prior probability of each label, which is determined by checking frequency of each label in the training set.
 
 Credits: https://www.nltk.org/book/ch06.html
-
-
-```python
-
-```
