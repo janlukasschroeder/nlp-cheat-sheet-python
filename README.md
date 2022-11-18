@@ -26,6 +26,10 @@ Uncased model is better unless you know that case information is important for y
 
 
 # NLP Algortihms
+- [Microsoft's Turing URL v6](https://arxiv.org/abs/2210.14867)
+- [GPT-NeoX](https://github.com/EleutherAI/gpt-neox) - open source version of GPT
+- [Alibaba’s StructBERT](https://github.com/alibaba/AliceMind)
+- [Google's T5](https://github.com/google-research/text-to-text-transfer-transformer)
 - [GPT-2](https://openai.com/blog/better-language-models/) - generate fake news, text summaries
 - [BERT](https://github.com/google-research/bert)
 - [FinBERT](https://github.com/ProsusAI/finBERT) - analyze sentiment of financial text
@@ -49,8 +53,23 @@ Uncased model is better unless you know that case information is important for y
 - [AG News - PyTorch integrated](https://pytorch.org/tutorials/beginner/text_sentiment_ngrams_tutorial.html)
 - [CommonCrawl News Dataset](https://commoncrawl.org/2016/10/news-dataset-available/)
 
-### Installation:
+# Benchmarks
+
+Evaluate models performance on language understanding tasks, such as question answering and text summarization.
+
+- [Glue](https://gluebenchmark.com/leaderboard)
+- [SuperGlue](https://super.gluebenchmark.com/leaderboard)
+
+# Other Resources
+
+[PapersWithCode](https://paperswithcode.com/task/text-classification)
+
+
+
+# Starting with Spacy
+
 spacy (good for beginners; use NLTK for bigger projects)
+
 ```shell
 pip install spacy
 python -m spacy download en 
@@ -63,10 +82,6 @@ python # to open REPL console
 >>> import nltk
 >>> nltk.download() # download all packages
 ```
-
-
-
-
 
 
 # Concepts
