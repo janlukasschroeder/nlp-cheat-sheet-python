@@ -387,6 +387,26 @@ Segments and labels multi-token sequences.
 
 Credits: https://www.nltk.org/book/ch07.html
 
+# Tokenizers
+
+- Byte-Pair Encoding (used by GPT-2)
+- WordPiece (used by BERT)
+- Unigram (used by T5)
+
+[SentencePiece](https://github.com/google/sentencepiece) is a tokenization algorithm for the preprocessing of text.
+
+[Unicode normalization](http://www.unicode.org/reports/tr15/) (such as NFC or NFKC), can also be applied by tokenizer.
+
+HTML tokenizers 
+- by W3: https://www.w3.org/TR/2011/WD-html5-20110113/tokenization.html
+- by spact: https://pypi.org/project/spacy-html-tokenizer/
+
+## Tokenization Process
+
+![tokenizer](https://huggingface.co/datasets/huggingface-course/documentation-images/resolve/main/en/chapter6/tokenization_pipeline.svg)
+
+[Credits](https://huggingface.co/course/chapter6/4?fw=pt)
+
 # Chinks and Chinking
 
 Chink is a sequence of tokens that is not included in a chunk.
@@ -1021,9 +1041,11 @@ How similar are two documents, sentences, token or spans?
 
 Popular: [Cosine](https://studymachinelearning.com/cosine-similarity-text-similarity-metric/) and [Jaccard](https://studymachinelearning.com/jaccard-similarity-text-similarity-metric-in-nlp/) similarity.
 
-Cosine similarity (also known as: L2-normalized dot product of vectors) is a formula used to calculate how similar two given word vectors are.
+**Cosine similarity** (also known as: L2-normalized dot product of vectors) is a formula used to calculate how similar two given word vectors are.
 
-Jaccard similarity indicates how many words two documents share by using the intersection and unions of the words.
+**Jaccard similarity** indicates how many words two documents share by using the intersection and unions of the words.
+
+**Levenshtein distance** is a metric for measuring the difference between two sequences. How similar are two words, or how similar are two sentences?
 
 ## Cosine Similarity
 
@@ -1098,6 +1120,33 @@ Across both sentences, nine unique words exist (union): data, a, of, is, economy
 Visualized:
 
 ![jac-sim2](https://studymachinelearning.com/wp-content/uploads/2020/04/intersection_example.png)
+
+## Levenshtein Distance
+
+Levenshtein distance between two words is the minimum number of single-character edits (i.e. insertions, deletions or substitutions) required to change one word into the other. 
+
+The distance can also be calculated for sentences, i.e. the minimum number of single token edits required to change one sentence into the other.
+
+Levenshtein distance for two strings `a`, `b` of length `|a|` and `|b|` is given by `lev`:
+
+![lev-dic](https://wikimedia.org/api/rest_v1/media/math/render/svg/70962a722b0b682e398f0ee77d60c714a441c54e)
+
+### Example 1
+
+Levenshtein distance between `HONDA` and `HYUNDAI` is 3 because it takes three transformations to change `HONDA` to `HYUNDAI`:
+
+1. Add `Y` to `HONDA` => `HYONDA`
+2. Substitue `O` with `U` in `HYONDA` => `HYUNDA`
+3. Add `I` to `HYUNDA` => `HYUNDAI`
+
+### Example 2
+
+Lev distance between two sentences `I love cats` and `I love dogs` is 1.
+
+Step 1: tokenize both sentences to `["I", "love", "cats"]`, `["I", "love", "docs"]`
+
+Step 2: perform one transformation, i.e. replace `cats` with `dogs`.
+
 
 ## L2 Norm
 
@@ -1553,18 +1602,6 @@ from keras.layers.core import Dense, Activation, Dropout, RepeatVector, Merge, T
 ```python
 import Levenshtein
 ```
-
-
-    ---------------------------------------------------------------------------
-
-    ModuleNotFoundError                       Traceback (most recent call last)
-
-    <ipython-input-61-4945bd004c73> in <module>
-    ----> 1 import Levenshtein
-    
-
-    ModuleNotFoundError: No module named 'Levenshtein'
-
 
 # Regularization
 
