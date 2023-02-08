@@ -34,6 +34,7 @@ Introduction to Natural Language Processing (NLP) tools, frameworks, concepts, r
 - [GPT-NeoX](https://github.com/EleutherAI/gpt-neox) - open source version of GPT
 
 ## Other Models
+- [Flan-T5](https://arxiv.org/pdf/2210.11416.pdf) (most powerful state-of-the art model as of writing)
 - [Vega v2](https://arxiv.org/abs/2212.01853)
 - [ERNIE](https://github.com/PaddlePaddle/ERNIE/)
 - [Microsoft's Turing URL v6](https://arxiv.org/abs/2210.14867)
