@@ -41,6 +41,7 @@ Introduction to Natural Language Processing (NLP) tools, frameworks, concepts, r
 - [Google's T5](https://github.com/google-research/text-to-text-transfer-transformer)
 - [Flair](https://github.com/flairNLP/flair)
 - [Whisper](https://github.com/openai/whisper) - speech-to-text transcription 
+- [Exhaustive list of models (text, vision, audio) and systems](https://docs.google.com/spreadsheets/d/1AAIebjNsnJj_uKALHbXNfn3_YsT6sHXtCU0q7OIPuc4/edit#gid=0)
 
 Uncased model is better unless you know that case information is important for your task (e.g., Named Entity Recognition or Part-of-Speech tagging)
 
@@ -65,9 +66,22 @@ Uncased model is better unless you know that case information is important for y
 - Part-of speech tagging
 
 #  Framworks
+
 - PyTorch
 - TensorFlow
 - Keras
+
+## Training & ML Frameworks
+
+- [Uber's Horovod](https://horovod.readthedocs.io/en/stable/): distributed deep learning training framework for TensorFlow, Keras, and PyTorch 
+- [Amazon's SageMaker](https://docs.aws.amazon.com/sagemaker/latest/dg/distributed-training.html): distributed training libraries
+- [DeepSpeed](https://www.deepspeed.ai/)
+- [Uber's Michelangelo](https://www.uber.com/en-DE/blog/michelangelo-machine-learning-platform/)
+- [Uber's Ludwig](https://ludwig.ai/latest/)
+- [Google's TFX](https://www.tensorflow.org/tfx)
+- [H2O AutoML](https://docs.h2o.ai/): you don’t need to specify the model structure or hyperparameters. It experiments with multiple model architectures and picks out the best model given the features and the task.
+- [Google's AutoML](https://cloud.google.com/automl): for developers with limited machine learning expertise to train high-quality models.
+
 
 
 # Datasets
